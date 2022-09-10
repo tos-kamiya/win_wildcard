@@ -10,6 +10,9 @@ import subprocess
 
 SUBPROCESS_OUT_ENCODING = locale.getpreferredencoding()
 
+POWERSHELL_META_CHARACTERS = "*?[]`"
+CMD_META_CHARACTERS = "*?<>" + '"'
+
 
 def get_windows_shell() -> Optional[str]:
     '''
@@ -34,17 +37,20 @@ def expand_windows_wildcard(filename: str, only_files=False) -> List[str]:
     The return value is a list of expanded file names and/or directory names. In case of no expansion, the list contains only the given filename.
     '''
 
-    if not (filename.find('*') >= 0 or filename.find('?') >= 0):
-        return [filename]
-
     s = get_windows_shell()
     if s == 'powershell':
+        if not any(filename.find(mc) >= 0 for mc in POWERSHELL_META_CHARACTERS):
+            return [filename]
+
         cmd = ['powershell.exe', '-Command', 'Get-ChildItem']
         if only_files:
             cmd.append('-File')
         cmd.extend(['-Name', filename])
         out = subprocess.check_output(cmd)
     elif s == 'cmd':
+        if not any(filename.find(mc) >= 0 for mc in CMD_META_CHARACTERS):
+            return [filename]
+
         cmd = ['dir']
         if only_files:
             cmd.append('/A-D')

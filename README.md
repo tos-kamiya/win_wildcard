@@ -1,7 +1,7 @@
 win_wildcard
 ============
 
-Expanding wildcards in shells of Windows using the dir or the ls commands.
+Expand wildcards in shells of Windows using the dir or the Get-ChildItem command.
 
 ## Sample
 
@@ -25,7 +25,16 @@ The Windows shell leaves wildcard expansion to the command, so there is no stand
 
 * [Wildcards of Get-ChildItem command of PowerShell](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_wildcards?view=powershell-7.2)
 * [Wildcards of dir command of cmd.exe](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dir)
-* [Wildcards of FindFirstFile(stackoverflow)](https://stackoverflow.com/questions/2563316/findfirstfileex-wildcard-characters)
+
+Some wildcards of cmd.exe are undocumented.
+
+* [Wildcards of Win32API FindFirstFile](https://stackoverflow.com/questions/2563316/findfirstfileex-wildcard-characters)
+* [Undocumented Wildcards](https://vs-rennweg.ksn.at/allmann/allgemeines/1/scripts%20kommandozeile/Windows%20CMD%20Shell%20Command%20Line%20Syntax/Wildcards%20_%20Windows%20CMD%20_%20SS64.com.html)
+
+There have been reports of user confusion due to wildcard specifications varying from command to command.
+
+* [PowerShell allow to use wildcard while copying file but cmd don't allow , why?](https://stackoverflow.com/questions/30427288/powershell-allow-to-use-wildcard-while-copying-file-but-cmd-dont-allow-why)
+* [Globbing patterns in windows command prompt/ powershell](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell)
 
 I thought it would be appropriate to provide a function that calls the `dir` command or `Get-ChildItem` command and uses the result of expanding the wildcard.
 
