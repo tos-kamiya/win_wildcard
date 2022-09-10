@@ -35,6 +35,7 @@ def expand_windows_wildcard(filename: str, only_files=False) -> List[str]:
     '''
     Expand a wildcard if the script is running in a Windows shell and if the filename of the argument contains the wildcard.
     The return value is a list of expanded file names and/or directory names. In case of no expansion, the list contains only the given filename.
+    Returns an empty list when there are no files matching the wildcard.
     '''
 
     s = get_windows_shell()
@@ -55,7 +56,12 @@ def expand_windows_wildcard(filename: str, only_files=False) -> List[str]:
         if only_files:
             cmd.append('/A-D')
         cmd.extend(['/B', filename])
-        out = subprocess.check_output(cmd, shell=True)
+        try:
+            out = subprocess.check_output(cmd, shell=True, stderr=subprocess.DEVNULL)  # do not show error message when there are no matching files
+        except subprocess.CalledProcessError as e:
+            if e.returncode == 1:  # there are no matching files
+                return []
+            raise e
     else:
         return [filename]
 
