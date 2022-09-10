@@ -48,7 +48,7 @@ def expand_windows_wildcard(filename: str, only_files=False) -> List[str]:
         cmd = ['dir']
         if only_files:
             cmd.append('/A-D')
-        cmd.extend(['/B', filename]]
+        cmd.extend(['/B', filename])
         out = subprocess.check_output(cmd, shell=True)
     else:
         return [filename]

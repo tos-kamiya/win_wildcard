@@ -6,6 +6,7 @@ Expanding wildcards in shells of Windows using the dir or the ls commands.
 ## Sample
 
 ```python
+import sys
 from win_wildcard import expand_windows_wildcard
 
 files = []
