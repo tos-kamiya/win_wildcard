@@ -11,4 +11,4 @@ for a in sys.argv[1:]:
     files.extend(r)
 
 if files:
-    print('\n'.join(files))
+    print("\n".join(repr(f) for f in files))
