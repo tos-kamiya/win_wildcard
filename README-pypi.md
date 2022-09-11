@@ -3,17 +3,7 @@ win_wildcard
 
 Expand wildcards in shells of Windows using the dir or the Get-ChildItem command.
 
-## Sample
-
-See [samples/expand_args.py](samples/expand_args.py) for the source code of the `expand_args.py`.
-
-Run in PowerShell
-
-![](images/run-in-powershell.png)
-
-Run in cmd.exe
-
-![](images/run-in-cmd.png)
+Refer the [homepage](https://github.com/tos-kamiya/win_wildcard) for sample.
 
 ## Motivation
 

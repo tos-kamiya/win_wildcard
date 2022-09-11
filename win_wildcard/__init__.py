@@ -8,7 +8,8 @@ import subprocess
 
 SUBPROCESS_OUT_ENCODING = locale.getpreferredencoding()
 
-POWERSHELL_META_CHARACTERS = "*?[]`"
+POWERSHELL_ESCAPE_CHAR = "`"
+POWERSHELL_META_CHARACTERS = "*?[]"
 CMD_META_CHARACTERS = "*?<>" + '"'
 
 
@@ -56,13 +57,15 @@ def expand_powershell_wildcard(filename: str, only_files: bool = False) -> List[
     Returns an empty list when there are no files matching the wildcard.
     """
 
-    if not any(filename.find(mc) >= 0 for mc in POWERSHELL_META_CHARACTERS):
+    metas_escape = POWERSHELL_META_CHARACTERS + POWERSHELL_ESCAPE_CHAR
+    if not any(filename.find(mc) >= 0 for mc in metas_escape):
         return [filename]
 
     cmd = ["powershell.exe", "-Command", "Get-ChildItem"]
     if only_files:
         cmd.append("-File")
-    cmd.extend(["-Name", filename])
+    f = filename.replace(POWERSHELL_ESCAPE_CHAR, POWERSHELL_ESCAPE_CHAR * 2)
+    cmd.extend(["-Name", f])
     out = subprocess.check_output(cmd)
 
     return _out_to_lines(out)
